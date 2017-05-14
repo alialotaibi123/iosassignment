@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  Book Restro
-//
-//  Created by vm mac on 05/05/2017.
-//  Copyright © 2017 jigs. All rights reserved.
-//
 
 import UIKit
 
@@ -12,10 +5,37 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var strpath=""
 
+    func dbcopyandpaste()
+    {
+        var path=NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        var str=path[0]
+        strpath=str.appending("/mydb.db")
+        print(strpath)
+        
+        do
+        {
+            if !FileManager.default.fileExists(atPath: strpath)
+            {
+                
+                let local=Bundle.main.path(forResource: "mydb", ofType: "db")
+                try FileManager.default.copyItem(atPath: local!, toPath: strpath)
+            }
+        }
+            
+        catch
+        {
+            print("Not Found")
+        }
+        
+        
+    }
 
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        dbcopyandpaste()
         return true
     }
 
